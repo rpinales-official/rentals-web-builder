@@ -1,12 +1,3 @@
-import React from 'react';
-
-const Admin: React.FC = () => {
-    return (
-        <div>
-            <h1>Admin Page</h1>
-            <p>Welcome to the admin page!</p>
-        </div>
-    );
-};
-
-export default Admin;
+export default function Admin() {
+    return <div>Admin Page Placeholder</div>;
+  }
