@@ -106,4 +106,78 @@ export const properties: Property[] = [
         ],
         bookingUrl: "https://airbnb.com/rooms/987654",
     },
+    {
+        id: 3,
+        name: "Urban Loft",
+        tagline: "Stylish loft in the heart of the city",
+        description:
+            "This modern loft apartment offers open-concept living, high ceilings, and easy access to downtown attractions, making it ideal for city explorers.",
+        highlights: [
+            { icon: "City", label: "City View" },
+            { icon: "Wifi", label: "High-Speed WiFi" },
+            { icon: "Work", label: "Workspace" },
+        ],
+        images: [
+            {
+                src: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80",
+                alt: "Urban loft interior",
+                label: "Living Space",
+            },
+            {
+                src: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80",
+                alt: "Loft bedroom",
+                label: "Bedroom",
+            },
+        ],
+        reviews: [
+            {
+                id: 5,
+                name: "Maria Lopez",
+                date: "2023-03-18",
+                rating: 4,
+                comment: "Amazing location, very stylish! A bit noisy at night, but overall a great stay.",
+            },
+        ],
+        bookingUrl: "https://airbnb.com/rooms/192837",
+    },
+    {
+        id: 4,
+        name: "Mountain Chalet",
+        tagline: "Rustic luxury with mountain views",
+        description:
+            "Perched on a hillside, this chalet combines cozy interiors with breathtaking alpine vistas. Great for skiers, hikers, and nature lovers.",
+        highlights: [
+            { icon: "Snow", label: "Ski Access" },
+            { icon: "Fireplace", label: "Fireplace" },
+            { icon: "HotTub", label: "Hot Tub" },
+        ],
+        images: [
+            {
+                src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+                alt: "Kitchen",
+                label: "Kitchen",
+            },
+            {
+                src: "https://images.unsplash.com/photo-1601979031896-3ccba1f93d61?auto=format&fit=crop&w=1200&q=80",
+                alt: "Bedroom",
+                label: "Bedroom",
+            },
+            {
+                src: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1200&q=80",
+                alt: "Patio",
+                label: "Patio",
+            },
+        ],
+        reviews: [
+            {
+                id: 6,
+                name: "James Wu",
+                date: "2023-02-07",
+                rating: 5,
+                comment:
+                    "Fantastic chalet! We loved the hot tub after skiing. Beautiful views and very comfortable rooms.",
+            },
+        ],
+        bookingUrl: "https://airbnb.com/rooms/564738",
+    }
 ];
