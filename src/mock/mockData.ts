@@ -23,10 +23,26 @@ export const properties: Property[] = [
             { icon: "Pets", label: "Pet-Friendly" },
         ],
         images: [
-            { src: "/images/villa1.jpg", alt: "Beachfront Villa", label: "Living Room" },
-            { src: "/images/villa2.jpg", alt: "Kitchen", label: "Kitchen" },
-            { src: "/images/villa3.jpg", alt: "Bedroom", label: "Bedroom" },
-            { src: "/images/villa4.jpg", alt: "Patio", label: "Patio" },
+            {
+                src: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80",
+                alt: "Beachfront Villa",
+                label: "Living Room",
+            },
+            {
+                src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+                alt: "Kitchen",
+                label: "Kitchen",
+            },
+            {
+                src: "https://images.unsplash.com/photo-1601979031896-3ccba1f93d61?auto=format&fit=crop&w=1200&q=80",
+                alt: "Bedroom",
+                label: "Bedroom",
+            },
+            {
+                src: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1200&q=80",
+                alt: "Patio",
+                label: "Patio",
+            },
         ],
         reviews: [
             {
@@ -68,8 +84,16 @@ export const properties: Property[] = [
             { icon: "People", label: "Sleeps 4" },
         ],
         images: [
-            { src: "/images/cabin1.jpg", alt: "Cabin exterior", label: "Exterior" },
-            { src: "/images/cabin2.jpg", alt: "Cozy interior", label: "Living Area" },
+            {
+                src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80",
+                alt: "Cabin exterior",
+                label: "Exterior",
+            },
+            {
+                src: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
+                alt: "Cozy interior",
+                label: "Living Area",
+            },
         ],
         reviews: [
             {
