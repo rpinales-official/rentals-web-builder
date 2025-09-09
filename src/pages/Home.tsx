@@ -1,10 +1,20 @@
 import { Box, Typography } from '@mui/material';
+import FeaturedPropertyCard from '../components/FeaturedPropertyCard';
+import { properties } from '../mock/mockData';
 
 export default function Home() {
+	const featured = properties[0];
+
 	return (
 		<>
 			<Section name="Logo" height={200} />
-			<Section name="Hero Section" height={300} />
+			<Box sx={{ mb: 4 }}>
+				<Typography variant="h5" sx={{ mb: 2 }}>
+					Featured Property
+				</Typography>
+				<FeaturedPropertyCard property={featured} />
+			</Box>
+
 			<Section name="Highlights" height={200} />
 			<Section name="Gallery" height={250} />
 			<Section name="Reviews" height={250} />
