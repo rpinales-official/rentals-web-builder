@@ -3,7 +3,7 @@ export type Property = {
     name: string;
     tagline: string;
     description: string;
-    highlights: { icon: string; label: string }[];
+    amenities: { icon: string; label: string }[];
     images: { src: string; alt: string; label?: string }[];
     reviews: { id: number; name: string; date: string; rating: number; comment: string }[];
     bookingUrl: string;
@@ -16,7 +16,7 @@ export const properties: Property[] = [
         tagline: "Luxury beach house with stunning ocean views",
         description:
             "Nestled along the pristine coastline, this exquisite beach house offers a luxurious retreat for families and friends. With breathtaking ocean views, spacious living areas, and direct beach access, it's the perfect setting for a memorable vacation.",
-        highlights: [
+        amenities: [
             { icon: "Ocean", label: "Ocean View" },
             { icon: "Wifi", label: "Free WiFi" },
             { icon: "People", label: "Sleeps 6" },
@@ -78,7 +78,7 @@ export const properties: Property[] = [
         tagline: "Modern escape in the woods",
         description:
             "Surrounded by pine trees, this cabin blends rustic charm with modern design. Perfect for couples or small groups seeking peace and nature.",
-        highlights: [
+        amenities: [
             { icon: "Fireplace", label: "Fireplace" },
             { icon: "Wifi", label: "Free WiFi" },
             { icon: "People", label: "Sleeps 4" },
@@ -112,7 +112,7 @@ export const properties: Property[] = [
         tagline: "Stylish loft in the heart of the city",
         description:
             "This modern loft apartment offers open-concept living, high ceilings, and easy access to downtown attractions, making it ideal for city explorers.",
-        highlights: [
+        amenities: [
             { icon: "City", label: "City View" },
             { icon: "Wifi", label: "High-Speed WiFi" },
             { icon: "Work", label: "Workspace" },
@@ -135,7 +135,8 @@ export const properties: Property[] = [
                 name: "Maria Lopez",
                 date: "2023-03-18",
                 rating: 4,
-                comment: "Amazing location, very stylish! A bit noisy at night, but overall a great stay.",
+                comment:
+                    "Amazing location, very stylish! A bit noisy at night, but overall a great stay.",
             },
         ],
         bookingUrl: "https://airbnb.com/rooms/192837",
@@ -146,7 +147,7 @@ export const properties: Property[] = [
         tagline: "Rustic luxury with mountain views",
         description:
             "Perched on a hillside, this chalet combines cozy interiors with breathtaking alpine vistas. Great for skiers, hikers, and nature lovers.",
-        highlights: [
+        amenities: [
             { icon: "Snow", label: "Ski Access" },
             { icon: "Fireplace", label: "Fireplace" },
             { icon: "HotTub", label: "Hot Tub" },
@@ -179,5 +180,8 @@ export const properties: Property[] = [
             },
         ],
         bookingUrl: "https://airbnb.com/rooms/564738",
-    }
+    },
 ];
+
+// handy helper if you need it elsewhere
+export const getPropertyById = (id: number) => properties.find((p) => p.id === id);

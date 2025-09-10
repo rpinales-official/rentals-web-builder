@@ -1,27 +1,35 @@
 import * as React from 'react';
 import { Box, Paper, Typography } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material/styles';
+import { amenityIconMap, fallbackAmenityIcon } from './amenityIconMap';
 
 type Props = {
+    /** Optional icon element, overrides iconKey+map */
     icon?: React.ReactNode;
+    /** Key to look up in the amenityIconMap */
     iconKey?: string;
+    /** Amenity label */
     label: string;
+    /** Optional click */
     onClick?: () => void;
+    /** Extra styling */
     sx?: SxProps<Theme>;
+    /** Accessibility label override */
     ariaLabel?: string;
+    /** Icon map to resolve iconKey */
     iconMap?: Record<string, React.ReactNode>;
 };
 
-export default function HighlightIconCard({
+export default function AmenityIconCard({
     icon,
     iconKey,
     label,
     onClick,
     sx,
     ariaLabel,
-    iconMap,
+    iconMap = amenityIconMap,
 }: Props) {
-    const resolvedIcon = icon ?? (iconKey && iconMap ? iconMap[iconKey] : null);
+    const resolvedIcon = icon ?? (iconKey && iconMap ? iconMap[iconKey] ?? fallbackAmenityIcon : fallbackAmenityIcon);
 
     return (
         <Paper

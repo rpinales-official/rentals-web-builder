@@ -1,23 +1,15 @@
 import { Box, Typography } from '@mui/material';
 import FeaturedPropertiesCarousel from '../sections/FeaturedPropertiesCarousel';
-import HighlightIconCard from '../components/HighlightIconCard';
-import { highlightIconMap } from '../components/highlightIconMap';
+import AmenitiesSection from '../sections/AmenitiesSection';
 
 export default function Home() {
 
 	return (
 		<>
 			<Section name="Logo" height={200} />
-
 			<FeaturedPropertiesCarousel title="Featured Properties" />
-
-			<Section name="Highlights" height={200}>
-				<HighlightIconCard
-					iconKey="Wifi"
-					label="Free WiFi"
-					iconMap={highlightIconMap}
-				/>
-			</Section>
+			{/* @TODO: pass propertyId dynamically for dynamic content on car press */}
+			<AmenitiesSection propertyId={1} />
 			<Section name="Gallery" height={250} />
 			<Section name="Reviews" height={250} />
 			<Section id={"contact"} name="Contact Form" height={200} />
