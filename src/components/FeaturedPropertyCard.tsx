@@ -26,17 +26,15 @@ export default function FeaturedPropertyCard({
             onBookNow(property);
             return;
         }
-        // otherwise, let the button's href navigate
     };
 
     return (
         <Box
             sx={{
-                display: 'inline-block',
-                // transparent background; the "card" is visually just the media + CTA
-                bgcolor: 'transparent',
-                // keep image + button as a single block with nice spacing
-                '&:focus-within img': { outline: (theme) => `2px solid ${theme.palette.primary.main}` },
+                ...styles.container,
+                '&:focus-within img': {
+                    outline: (theme) => `2px solid ${theme.palette.primary.main}`,
+                },
                 ...sx,
             }}
         >
@@ -46,16 +44,7 @@ export default function FeaturedPropertyCard({
                 src={img?.src}
                 alt={img?.alt || property.name}
                 loading="lazy"
-                sx={{
-                    width: '100%',
-                    height: { xs: 180, sm: 240, md: 300 },
-                    objectFit: 'cover',
-                    borderRadius: 3,
-                    display: 'block',
-                    boxShadow: 1,
-                    transition: 'transform 180ms ease',
-                    '&:hover': { transform: 'scale(1.01)' },
-                }}
+                sx={styles.image}
             />
 
             {/* CTA */}
@@ -67,7 +56,7 @@ export default function FeaturedPropertyCard({
                 href={onBookNow ? undefined : property.bookingUrl}
                 target={onBookNow ? undefined : '_blank'}
                 rel={onBookNow ? undefined : 'noopener noreferrer'}
-                sx={{ mt: 1.5, borderRadius: 999, px: 2.5 }}
+                sx={styles.cta}
                 aria-label={`Book ${property.name}`}
             >
                 Book Now
@@ -75,3 +64,33 @@ export default function FeaturedPropertyCard({
         </Box>
     );
 }
+
+const styles = {
+    container: {
+        display: 'inline-block',
+        bgcolor: 'transparent',
+        width: '100%',
+    },
+    image: {
+        width: '100%',
+        height: { xs: 200, sm: 280, md: 340 },
+        objectFit: 'cover',
+        borderRadius: 3,
+        display: 'block',
+        boxShadow: 1,
+        transition: 'transform 180ms ease',
+        '&:hover': { transform: 'scale(1.01)' },
+    },
+    cta: {
+        mt: 1.5,
+        borderRadius: 999,
+        px: 2.5,
+        transition: 'all 0.2s ease',
+        '&:hover': {
+            bgcolor: 'background.paper',
+            color: 'primary.main',
+            border: 1,
+            borderColor: 'primary.main',
+        },
+    }
+};
