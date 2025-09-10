@@ -20,6 +20,7 @@ type Props = {
     visible?: number;        // desktop/tablet visible count
     visibleMobile?: number;  // mobile visible count
     spacing?: number;        // spacing between cards
+    randomize?: boolean;  // whether to randomize the order of items
 };
 
 export default function FeaturedPropertiesCarousel({
@@ -28,12 +29,19 @@ export default function FeaturedPropertiesCarousel({
     visible = 2,
     visibleMobile = 1,
     spacing = 3,
+    randomize = true,
 }: Props) {
+
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+    const orderedItems = React.useMemo(
+        () => (randomize ? shuffleArray(items) : items),
+        [items, randomize]
+    );
+
     const vis = isMobile ? Math.max(1, visibleMobile) : Math.max(1, visible);
-    const total = items.length;
+    const total = orderedItems.length;
 
     const [start, setStart] = React.useState(0);
 
@@ -65,10 +73,19 @@ export default function FeaturedPropertiesCarousel({
         if (total === 0) return [];
         const out: Property[] = [];
         for (let i = 0; i < Math.min(vis, total); i++) {
-            out.push(items[(start + i) % total]);
+            out.push(orderedItems[(start + i) % total]);
         }
         return out;
-    }, [items, start, vis, total]);
+    }, [orderedItems, start, vis, total]);
+
+    function shuffleArray<T>(arr: T[]): T[] {
+        const copy = [...arr];
+        for (let i = copy.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+    }
 
     return (
         <Box sx={{ position: 'relative', mb: 4 }}>
