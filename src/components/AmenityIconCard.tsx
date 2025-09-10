@@ -57,7 +57,7 @@ const styles = {
         borderColor: 'divider',
         px: 1.5,
         py: 1,
-        borderRadius: 2.5,
+        borderRadius: 1,
         bgcolor: 'background.paper',
         transition: 'background-color 0.2s ease, border-color 0.2s ease',
         '&:hover': {
