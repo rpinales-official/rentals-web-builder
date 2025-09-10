@@ -88,8 +88,8 @@ export default function FeaturedPropertiesCarousel({
     }
 
     return (
-        <Box sx={{ position: 'relative', mb: 4 }}>
-            <Typography variant="h5" sx={{ mb: 2 }}>
+        <Box sx={styles.container}>
+            <Typography variant="h5" sx={styles.mb2}>
                 {title}
             </Typography>
 
@@ -122,8 +122,8 @@ export default function FeaturedPropertiesCarousel({
             <Box onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
                 <Grid container spacing={spacing}>
                     {windowItems.map((p) => (
-                        <Grid key={p.id} item xs={12} sm={6} sx={{ display: 'flex' }}>
-                            <FeaturedPropertyCard property={p} sx={{ flexGrow: 1 }} />
+                        <Grid key={p.id} item xs={12} sm={6} sx={styles.innerGrid}>
+                            <FeaturedPropertyCard property={p} sx={styles.featuredPropertyCard} />
                         </Grid>
                     ))}
                 </Grid>
@@ -133,6 +133,10 @@ export default function FeaturedPropertiesCarousel({
 }
 
 const styles = {
+    container: {
+        position: 'relative',
+        mb: 4
+    },
     iconButtonBase: {
         position: 'absolute',
         top: '50%',
@@ -148,4 +152,13 @@ const styles = {
             color: '#fff',
         },
     },
+    innerGrid: {
+        display: 'flex'
+    },
+    featuredPropertyCard: {
+        flexGrow: 1
+    },
+    mb2: {
+        marginBottom: 2
+    }
 };
