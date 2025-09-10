@@ -1,5 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import FeaturedPropertiesCarousel from '../sections/FeaturedPropertiesCarousel';
+import HighlightIconCard from '../components/HighlightIconCard';
+import { highlightIconMap } from '../components/highlightIconMap';
 
 export default function Home() {
 
@@ -9,7 +11,13 @@ export default function Home() {
 
 			<FeaturedPropertiesCarousel title="Featured Properties" />
 
-			<Section name="Highlights" height={200} />
+			<Section name="Highlights" height={200}>
+				<HighlightIconCard
+					iconKey="Wifi"
+					label="Free WiFi"
+					iconMap={highlightIconMap}
+				/>
+			</Section>
 			<Section name="Gallery" height={250} />
 			<Section name="Reviews" height={250} />
 			<Section id={"contact"} name="Contact Form" height={200} />
@@ -17,7 +25,17 @@ export default function Home() {
 	);
 }
 
-function Section({ name, height, id }: { name: string; height: number; id?: string; }) {
+function Section({
+	name,
+	height,
+	id,
+	children,
+}: {
+	name: string;
+	height: number;
+	id?: string;
+	children?: React.ReactNode;
+}) {
 	return (
 		<Box
 			id={id}
@@ -32,7 +50,7 @@ function Section({ name, height, id }: { name: string; height: number; id?: stri
 				borderRadius: 2,
 			}}
 		>
-			<Typography variant="h6">{name}</Typography>
+			{children ?? <Typography variant="h6">{name}</Typography>}
 		</Box>
 	);
 }
