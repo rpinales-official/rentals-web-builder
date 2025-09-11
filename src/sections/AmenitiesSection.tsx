@@ -2,25 +2,17 @@ import * as React from 'react';
 import { Box, Typography, IconButton, Tooltip } from '@mui/material';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-
 import AmenityIconCard from '../components/AmenityIconCard';
 import { amenityIconMap } from '../components/amenityIconMap';
 import { properties, type Property } from '../mock/mockData';
 
 type Props = {
-    /** Section title */
     title?: string;
-    /** Property ID to read amenities from (defaults to 1) */
     propertyId?: number;
-    /** Scroll amount in px per arrow click */
     scrollBy?: number;
 };
 
-export default function AmenitiesSection({
-    title = 'Amenities',
-    propertyId = 1,
-    scrollBy = 320,
-}: Props) {
+export default function AmenitiesSection({ title = 'Amenities', propertyId = 1, scrollBy = 320 }: Props) {
     const scrollerRef = React.useRef<HTMLDivElement | null>(null);
     const [canLeft, setCanLeft] = React.useState(false);
     const [canRight, setCanRight] = React.useState(false);
@@ -67,40 +59,24 @@ export default function AmenitiesSection({
 
     return (
         <Box sx={styles.wrap}>
-            <Typography variant="h6" sx={styles.title}>
-                {title}
-            </Typography>
+            <Typography variant="h6" sx={styles.title}>{title}</Typography>
 
             {canLeft && (
                 <Tooltip title="Scroll left">
-                    <IconButton
-                        aria-label="scroll left"
-                        onClick={() => scroll('left')}
-                        sx={{ ...styles.arrowBase, left: -8 }}
-                    >
+                    <IconButton aria-label="scroll left" onClick={() => scroll('left')} sx={{ ...styles.arrowBase, left: -8 }}>
                         <NavigateBeforeIcon fontSize="medium" />
                     </IconButton>
                 </Tooltip>
             )}
             {canRight && (
                 <Tooltip title="Scroll right">
-                    <IconButton
-                        aria-label="scroll right"
-                        onClick={() => scroll('right')}
-                        sx={{ ...styles.arrowBase, right: -8 }}
-                    >
+                    <IconButton aria-label="scroll right" onClick={() => scroll('right')} sx={{ ...styles.arrowBase, right: -8 }}>
                         <NavigateNextIcon fontSize="medium" />
                     </IconButton>
                 </Tooltip>
             )}
 
-            <Box
-                ref={scrollerRef}
-                role="list"
-                tabIndex={0}
-                onKeyDown={onKeyDown}
-                sx={styles.scroller}
-            >
+            <Box ref={scrollerRef} role="list" tabIndex={0} onKeyDown={onKeyDown} sx={styles.scroller}>
                 {property.amenities.map((a, i) => (
                     <Box role="listitem" key={`${a.icon}-${a.label}-${i}`} sx={styles.item}>
                         <AmenityIconCard iconKey={a.icon} label={a.label} iconMap={amenityIconMap} />
@@ -112,13 +88,8 @@ export default function AmenitiesSection({
 }
 
 const styles = {
-    wrap: {
-        position: 'relative',
-        mb: 4,
-    },
-    title: {
-        mb: 1.5,
-    },
+    wrap: { position: 'relative', mb: 4 },
+    title: { mb: 1.5 },
     scroller: {
         display: 'flex',
         gap: 1.5,
@@ -132,9 +103,7 @@ const styles = {
         '&::-webkit-scrollbar-thumb': { backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 999 },
         '& > *': { scrollSnapAlign: 'start' },
     },
-    item: {
-        flex: '0 0 auto',
-    },
+    item: { flex: '0 0 auto' },
     arrowBase: {
         position: 'absolute' as const,
         top: '50%',

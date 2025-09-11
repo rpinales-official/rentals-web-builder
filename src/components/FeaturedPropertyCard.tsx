@@ -1,53 +1,28 @@
 import * as React from 'react';
 import { Box, Button } from '@mui/material';
-import type { Property } from '../mock/mockData';
+import type { SxProps, Theme } from '@mui/material/styles';
+import type { Property, Img } from '../mock/mockData';
 
 type Props = {
     property: Property;
-    /** Defaults to the first image in property.images */
-    imageIndex?: number;
-    /** If provided, called instead of navigating to bookingUrl */
+    image?: Img;                         // optional override (defaults to mainImage)
     onBookNow?: (property: Property) => void;
-    /** Optional extra sx for the wrapper */
-    sx?: object;
+    sx?: SxProps<Theme>;
 };
 
-export default function FeaturedPropertyCard({
-    property,
-    imageIndex = 0,
-    onBookNow,
-    sx,
-}: Props) {
-    const img = property.images[imageIndex] ?? property.images[0];
+export default function FeaturedPropertyCard({ property, image, onBookNow, sx }: Props) {
+    const img = image ?? property.mainImage;
 
     const handleBook = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (onBookNow) {
             e.preventDefault();
             onBookNow(property);
-            return;
         }
     };
 
     return (
-        <Box
-            sx={{
-                ...styles.container,
-                '&:focus-within img': {
-                    outline: (theme) => `2px solid ${theme.palette.primary.main}`,
-                },
-                ...sx,
-            }}
-        >
-            {/* Image */}
-            <Box
-                component="img"
-                src={img?.src}
-                alt={img?.alt || property.name}
-                loading="lazy"
-                sx={styles.image}
-            />
-
-            {/* CTA */}
+        <Box sx={{ ...styles.wrap, ...sx }}>
+            <Box component="img" src={img.src} alt={img.alt || property.name} loading="lazy" sx={styles.img} />
             <Button
                 variant="contained"
                 color="primary"
@@ -66,15 +41,18 @@ export default function FeaturedPropertyCard({
 }
 
 const styles = {
-    container: {
+    wrap: {
         display: 'inline-block',
         bgcolor: 'transparent',
         width: '100%',
+        '&:focus-within img': {
+            outline: (theme: any) => `2px solid ${theme.palette.primary.main}`,
+        },
     },
-    image: {
+    img: {
         width: '100%',
         height: { xs: 200, sm: 280, md: 340 },
-        objectFit: 'cover',
+        objectFit: 'cover' as const,
         borderRadius: 3,
         display: 'block',
         boxShadow: 1,
@@ -92,5 +70,5 @@ const styles = {
             border: 1,
             borderColor: 'primary.main',
         },
-    }
+    },
 };
