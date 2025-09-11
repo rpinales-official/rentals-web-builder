@@ -1,16 +1,31 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import FeaturedPropertiesCarousel from '../sections/FeaturedPropertiesCarousel';
 import AmenitiesSection from '../sections/AmenitiesSection';
+import GalleryImageCard from '../components/GalleryImageCard';
+import { properties } from '../mock/mockData';
 
 export default function Home() {
+
+	const p = properties[1 - 1];
 
 	return (
 		<>
 			<Section name="Logo" height={200} />
 			<FeaturedPropertiesCarousel title="Featured Properties" />
-			{/* @TODO: pass propertyId dynamically for dynamic content on car press */}
+			{/* @TODO: pass propertyId dynamically for dynamic content on card press */}
 			<AmenitiesSection propertyId={1} />
-			<Section name="Gallery" height={250} />
+
+			<Box sx={{ mb: 4 }}>
+				<Typography variant="h6" sx={{ mb: 1.5 }}>Photo Gallery</Typography>
+				<Grid container spacing={2}>
+					{p.gallery.map(cat => (
+						<Grid key={cat.key} item xs={6} sm={3}>
+							<GalleryImageCard image={cat.cover} label={cat.label} imagesInCategory={cat.images} />
+						</Grid>
+					))}
+				</Grid>
+			</Box>
+
 			<Section name="Reviews" height={250} />
 			<Section id={"contact"} name="Contact Form" height={200} />
 		</>

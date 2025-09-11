@@ -4,19 +4,12 @@ import type { SxProps, Theme } from '@mui/material/styles';
 import { amenityIconMap, fallbackAmenityIcon } from './amenityIconMap';
 
 type Props = {
-    /** Optional icon element, overrides iconKey+map */
     icon?: React.ReactNode;
-    /** Key to look up in the amenityIconMap */
     iconKey?: string;
-    /** Amenity label */
     label: string;
-    /** Optional click */
     onClick?: () => void;
-    /** Extra styling */
     sx?: SxProps<Theme>;
-    /** Accessibility label override */
     ariaLabel?: string;
-    /** Icon map to resolve iconKey */
     iconMap?: Record<string, React.ReactNode>;
 };
 
@@ -29,7 +22,8 @@ export default function AmenityIconCard({
     ariaLabel,
     iconMap = amenityIconMap,
 }: Props) {
-    const resolvedIcon = icon ?? (iconKey && iconMap ? iconMap[iconKey] ?? fallbackAmenityIcon : fallbackAmenityIcon);
+    const resolvedIcon =
+        icon ?? (iconKey ? iconMap[iconKey] ?? fallbackAmenityIcon : fallbackAmenityIcon);
 
     return (
         <Paper
@@ -39,8 +33,7 @@ export default function AmenityIconCard({
             aria-label={ariaLabel ?? label}
             sx={{ ...styles.card, ...(onClick ? styles.clickable : {}), ...sx }}
         >
-            {resolvedIcon && <Box sx={styles.icon}>{resolvedIcon}</Box>}
-
+            <Box sx={styles.icon}>{resolvedIcon}</Box>
             <Typography variant="body2" sx={styles.label}>
                 {label}
             </Typography>
@@ -57,24 +50,12 @@ const styles = {
         borderColor: 'divider',
         px: 1.5,
         py: 1,
-        borderRadius: 1,
+        borderRadius: 1, // rectangular (slight rounding). Use 0 for sharp corners.
         bgcolor: 'background.paper',
         transition: 'background-color 0.2s ease, border-color 0.2s ease',
-        '&:hover': {
-            bgcolor: 'grey.50',
-            borderColor: 'grey.300',
-        },
+        '&:hover': { bgcolor: 'grey.50', borderColor: 'grey.300' },
     },
-    clickable: {
-        cursor: 'pointer',
-    },
-    icon: {
-        display: 'inline-flex',
-        alignItems: 'center',
-        color: 'text.secondary',
-    },
-    label: {
-        fontWeight: 600,
-        color: 'text.primary',
-    },
+    clickable: { cursor: 'pointer' },
+    icon: { display: 'inline-flex', alignItems: 'center', color: 'text.secondary' },
+    label: { fontWeight: 600, color: 'text.primary' },
 };

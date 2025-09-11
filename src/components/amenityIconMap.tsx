@@ -22,5 +22,4 @@ export const amenityIconMap: Record<string, ReactElement> = {
 	City: <LocationCityIcon fontSize="small" />,
 };
 
-// fallback icon
-export const fallbackAmenityIcon = <CheckCircleIcon fontSize="small" />;
+export const fallbackAmenityIcon: ReactElement = <CheckCircleIcon fontSize="small" />;
