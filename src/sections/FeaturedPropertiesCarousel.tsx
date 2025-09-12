@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useCallback, useState, useRef, useMemo  } from 'react';
 import { Box, IconButton, Typography, useMediaQuery, useTheme, Tooltip } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -6,7 +6,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FeaturedPropertyCard from '../components/FeaturedPropertyCard';
 import { properties as defaultList, type Property } from '../mock/mockData';
 
-type Props = {
+type FeaturedPropertiesCarouselProps = {
     title?: string;
     items?: Property[];           // we’ll receive the ordered list
     visible?: number;
@@ -25,27 +25,28 @@ export default function FeaturedPropertiesCarousel({
     spacing = 3,
     onSelect,
     selectedId,
-}: Props) {
+}: FeaturedPropertiesCarouselProps) {
+
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const vis = isMobile ? Math.max(1, visibleMobile) : Math.max(1, visible);
     const total = items.length;
 
-    const [start, setStart] = React.useState(0);
+    const [start, setStart] = useState(0);
     const canSlide = total > vis;
 
-    const next = React.useCallback(() => {
+    const next = useCallback(() => {
         if (!canSlide) return;
         setStart((s) => (s + vis) % total);
     }, [canSlide, vis, total]);
 
-    const prev = React.useCallback(() => {
+    const prev = useCallback(() => {
         if (!canSlide) return;
         setStart((s) => (s - vis + total) % total);
     }, [canSlide, vis, total]);
 
-    const touchX = React.useRef<number | null>(null);
+    const touchX = useRef<number | null>(null);
     const onTouchStart = (e: React.TouchEvent) => (touchX.current = e.touches[0].clientX);
     const onTouchEnd = (e: React.TouchEvent) => {
         if (touchX.current == null) return;
@@ -56,7 +57,7 @@ export default function FeaturedPropertiesCarousel({
         touchX.current = null;
     };
 
-    const windowItems: Property[] = React.useMemo(() => {
+    const windowItems: Property[] = useMemo(() => {
         if (total === 0) return [];
         const out: Property[] = [];
         for (let i = 0; i < Math.min(vis, total); i++) {
