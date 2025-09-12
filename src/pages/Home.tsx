@@ -33,7 +33,7 @@ export default function Home() {
 
 	return (
 		<>
-			<Section name="Logo" height={200} />
+			{/* <Section name="Logo" height={200} /> */}
 
 			<FeaturedPropertiesCarousel
 				title="Featured Properties"
