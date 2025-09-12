@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, ButtonBase } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material/styles';
 import type { Property, Img } from '../mock/mockData';
 
@@ -7,10 +7,19 @@ type Props = {
     property: Property;
     image?: Img;                         // optional override (defaults to mainImage)
     onBookNow?: (property: Property) => void;
+    onSelect?: (property: Property) => void;   // NEW: click card to select property
+    selected?: boolean;                        // NEW: visual cue when selected
     sx?: SxProps<Theme>;
 };
 
-export default function FeaturedPropertyCard({ property, image, onBookNow, sx }: Props) {
+export default function FeaturedPropertyCard({
+    property,
+    image,
+    onBookNow,
+    onSelect,
+    selected = false,
+    sx,
+}: Props) {
     const img = image ?? property.mainImage;
 
     const handleBook = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -20,9 +29,18 @@ export default function FeaturedPropertyCard({ property, image, onBookNow, sx }:
         }
     };
 
+    const handleSelect = () => {
+        onSelect?.(property);
+    };
+
     return (
-        <Box sx={{ ...styles.wrap, ...sx }}>
-            <Box component="img" src={img.src} alt={img.alt || property.name} loading="lazy" sx={styles.img} />
+        <Box sx={{ ...styles.wrap, ...(selected ? styles.selected : {}), ...sx }}>
+            {/* Clickable image area */}
+            <ButtonBase onClick={handleSelect} sx={styles.clickArea} aria-label={`View ${property.name}`}>
+                <Box component="img" src={img.src} alt={img.alt || property.name} loading="lazy" sx={styles.img} />
+            </ButtonBase>
+
+            {/* CTA */}
             <Button
                 variant="contained"
                 color="primary"
@@ -48,6 +66,18 @@ const styles = {
         '&:focus-within img': {
             outline: (theme: any) => `2px solid ${theme.palette.primary.main}`,
         },
+    },
+    selected: {
+        // subtle highlight for the selected property
+        '& img': {
+            boxShadow: (theme: any) => `0 0 0 3px ${theme.palette.primary.light}`,
+        },
+    },
+    clickArea: {
+        display: 'block',
+        width: '100%',
+        borderRadius: 12,
+        overflow: 'hidden',
     },
     img: {
         width: '100%',
