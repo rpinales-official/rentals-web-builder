@@ -6,13 +6,18 @@ import AmenityIconCard from '../components/AmenityIconCard';
 import { amenityIconMap } from '../components/amenityIconMap';
 import { properties, type Property } from '../mock/mockData';
 
-type Props = {
+type AmenitiesSectionProps = {
     title?: string;
     propertyId?: number;
     scrollBy?: number;
 };
 
-export default function AmenitiesSection({ title = 'Amenities', propertyId = 1, scrollBy = 320 }: Props) {
+export default function AmenitiesSection({
+    title = 'Amenities',
+    propertyId = 1,
+    scrollBy = 320
+}: AmenitiesSectionProps) {
+    
     const scrollerRef = React.useRef<HTMLDivElement | null>(null);
     const [canLeft, setCanLeft] = React.useState(false);
     const [canRight, setCanRight] = React.useState(false);

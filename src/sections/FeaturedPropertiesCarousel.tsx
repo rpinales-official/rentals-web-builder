@@ -1,28 +1,21 @@
-import * as React from 'react';
+import React, { useCallback, useState, useRef, useMemo  } from 'react';
 import { Box, IconButton, Typography, useMediaQuery, useTheme, Tooltip } from '@mui/material';
-import Grid from '@mui/material/Grid';                   // Grid v1 API
+import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FeaturedPropertyCard from '../components/FeaturedPropertyCard';
 import { properties as defaultList, type Property } from '../mock/mockData';
 
-type Props = {
+type FeaturedPropertiesCarouselProps = {
     title?: string;
-    items?: Property[];
+    items?: Property[];           // we’ll receive the ordered list
     visible?: number;
     visibleMobile?: number;
     spacing?: number;
-    randomize?: boolean;                                    // shuffle order on load
+    onSelect?: (property: Property) => void;
+    selectedId?: number;
 };
 
-function shuffleArray<T>(arr: T[]): T[] {
-    const copy = [...arr];
-    for (let i = copy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-    }
-    return copy;
-}
 
 export default function FeaturedPropertiesCarousel({
     title = 'Featured Properties',
@@ -30,30 +23,30 @@ export default function FeaturedPropertiesCarousel({
     visible = 2,
     visibleMobile = 1,
     spacing = 3,
-    randomize = false,
-}: Props) {
+    onSelect,
+    selectedId,
+}: FeaturedPropertiesCarouselProps) {
+
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const orderedItems = React.useMemo(() => (randomize ? shuffleArray(items) : items), [items, randomize]);
     const vis = isMobile ? Math.max(1, visibleMobile) : Math.max(1, visible);
-    const total = orderedItems.length;
+    const total = items.length;
 
-    const [start, setStart] = React.useState(0);
+    const [start, setStart] = useState(0);
     const canSlide = total > vis;
 
-    const next = React.useCallback(() => {
+    const next = useCallback(() => {
         if (!canSlide) return;
         setStart((s) => (s + vis) % total);
     }, [canSlide, vis, total]);
 
-    const prev = React.useCallback(() => {
+    const prev = useCallback(() => {
         if (!canSlide) return;
         setStart((s) => (s - vis + total) % total);
     }, [canSlide, vis, total]);
 
-    // touch swipe
-    const touchX = React.useRef<number | null>(null);
+    const touchX = useRef<number | null>(null);
     const onTouchStart = (e: React.TouchEvent) => (touchX.current = e.touches[0].clientX);
     const onTouchEnd = (e: React.TouchEvent) => {
         if (touchX.current == null) return;
@@ -64,14 +57,14 @@ export default function FeaturedPropertiesCarousel({
         touchX.current = null;
     };
 
-    const windowItems: Property[] = React.useMemo(() => {
+    const windowItems: Property[] = useMemo(() => {
         if (total === 0) return [];
         const out: Property[] = [];
         for (let i = 0; i < Math.min(vis, total); i++) {
-            out.push(orderedItems[(start + i) % total]);
+            out.push(items[(start + i) % total]);
         }
         return out;
-    }, [orderedItems, start, vis, total]);
+    }, [items, start, vis, total]);
 
     return (
         <Box sx={{ position: 'relative', mb: 4 }}>
@@ -96,7 +89,12 @@ export default function FeaturedPropertiesCarousel({
                 <Grid container spacing={spacing}>
                     {windowItems.map((p) => (
                         <Grid key={p.id} item xs={12} sm={6} sx={{ display: 'flex' }}>
-                            <FeaturedPropertyCard property={p} sx={{ flexGrow: 1 }} />
+                            <FeaturedPropertyCard
+                                property={p}
+                                onSelect={onSelect}
+                                selected={p.id === selectedId}
+                                sx={{ flexGrow: 1 }}
+                            />
                         </Grid>
                     ))}
                 </Grid>
