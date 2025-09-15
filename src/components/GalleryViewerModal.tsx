@@ -17,9 +17,9 @@ import type { Img } from '../mock/mockData';
 type Props = {
     open: boolean;
     onClose: () => void;
-    title?: string;          // category label, e.g. "Kitchen"
-    images: Img[];           // images in this category
-    startIndex?: number;     // initial image index
+    title?: string;        // category label, e.g., "Kitchen"
+    images: Img[];
+    startIndex?: number;
 };
 
 export default function GalleryViewerModal({
@@ -35,7 +35,7 @@ export default function GalleryViewerModal({
 
     const [index, setIndex] = React.useState(startIndex);
 
-    // keep index in range when images change or modal reopens
+    // Ensure index is valid on open or when images change
     React.useEffect(() => {
         if (!open) return;
         const safe = Math.min(Math.max(startIndex, 0), Math.max(count - 1, 0));
@@ -43,16 +43,26 @@ export default function GalleryViewerModal({
     }, [open, startIndex, count]);
 
     const hasImages = count > 0;
+    const current = hasImages ? images[index] : undefined;
+
+    // Preload adjacent images for smoother nav
+    React.useEffect(() => {
+        if (!hasImages) return;
+        const nextIdx = (index + 1) % count;
+        const prevIdx = (index - 1 + count) % count;
+        [nextIdx, prevIdx].forEach((i) => {
+            const src = images[i]?.src;
+            if (!src) return;
+            const img = new Image();
+            img.src = src;
+        });
+    }, [index, images, hasImages, count]);
 
     const go = (dir: 'prev' | 'next') => {
         if (!hasImages) return;
-        setIndex((i) => {
-            if (dir === 'prev') return (i - 1 + count) % count;
-            return (i + 1) % count;
-        });
+        setIndex((i) => (dir === 'prev' ? (i - 1 + count) % count : (i + 1) % count));
     };
 
-    // keyboard navigation
     const onKeyDown = (e: React.KeyboardEvent) => {
         if (!hasImages) return;
         if (e.key === 'ArrowLeft') go('prev');
@@ -60,7 +70,7 @@ export default function GalleryViewerModal({
         if (e.key === 'Escape') onClose();
     };
 
-    // basic swipe
+    // Basic swipe
     const touchX = React.useRef<number | null>(null);
     const onTouchStart = (e: React.TouchEvent) => (touchX.current = e.touches[0].clientX);
     const onTouchEnd = (e: React.TouchEvent) => {
@@ -72,7 +82,8 @@ export default function GalleryViewerModal({
         touchX.current = null;
     };
 
-    const current = hasImages ? images[index] : undefined;
+    // Thumbnail click
+    const onThumbClick = (i: number) => setIndex(i);
 
     return (
         <Dialog
@@ -101,7 +112,7 @@ export default function GalleryViewerModal({
                 </Tooltip>
             </Box>
 
-            {/* Content */}
+            {/* Main viewer */}
             <DialogContent
                 dividers
                 sx={styles.content}
@@ -110,7 +121,6 @@ export default function GalleryViewerModal({
                 onTouchStart={onTouchStart}
                 onTouchEnd={onTouchEnd}
             >
-                {/* Prev / Next */}
                 {hasImages && count > 1 && (
                     <>
                         <Tooltip title="Previous">
@@ -126,7 +136,6 @@ export default function GalleryViewerModal({
                     </>
                 )}
 
-                {/* Image */}
                 {hasImages ? (
                     <Box
                         component="img"
@@ -141,6 +150,34 @@ export default function GalleryViewerModal({
                     </Typography>
                 )}
             </DialogContent>
+
+            {/* Thumbnail strip */}
+            {hasImages && (
+                <Box sx={styles.thumbBar}>
+                    <Box sx={styles.thumbScroller} role="list">
+                        {images.map((img, i) => {
+                            const selected = i === index;
+                            return (
+                                <Box
+                                    role="listitem"
+                                    key={`${img.src}-${i}`}
+                                    onClick={() => onThumbClick(i)}
+                                    aria-label={`Thumbnail ${i + 1} ${selected ? '(current)' : ''}`}
+                                    sx={{ ...styles.thumbWrap, ...(selected ? styles.thumbSelected : {}) }}
+                                >
+                                    <Box
+                                        component="img"
+                                        src={img.src}
+                                        alt={img.alt || `Thumbnail ${i + 1}`}
+                                        loading="lazy"
+                                        sx={styles.thumb}
+                                    />
+                                </Box>
+                            );
+                        })}
+                    </Box>
+                </Box>
+            )}
         </Dialog>
     );
 }
@@ -156,16 +193,10 @@ const styles = {
         px: 2,
         py: 1,
     },
-    title: {
-        fontWeight: 600,
-    },
-    counter: {
-        color: 'text.secondary',
-        fontWeight: 400,
-    },
-    closeBtn: {
-        ml: 1,
-    },
+    title: { fontWeight: 600 },
+    counter: { color: 'text.secondary', fontWeight: 400 },
+    closeBtn: { ml: 1 },
+
     content: {
         position: 'relative' as const,
         display: 'flex',
@@ -193,5 +224,47 @@ const styles = {
         borderColor: 'divider',
         boxShadow: 1,
         '&:hover': { bgcolor: 'primary.main', color: '#fff' },
+    },
+
+    // Thumbnails
+    thumbBar: {
+        px: 2,
+        py: 1,
+        bgcolor: 'background.paper',
+        borderTop: 1,
+        borderColor: 'divider',
+    },
+    thumbScroller: {
+        display: 'flex',
+        gap: 1,
+        overflowX: 'auto',
+        overflowY: 'hidden',
+        scrollSnapType: 'x proximity',
+        pb: 0.5,
+        '&::-webkit-scrollbar': { height: 6 },
+        '&::-webkit-scrollbar-thumb': { backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 999 },
+    },
+    thumbWrap: {
+        flex: '0 0 auto',
+        width: 80,         // 👈 tweak size here
+        height: 56,
+        borderRadius: 1,
+        overflow: 'hidden',
+        border: 1,
+        borderColor: 'transparent',
+        cursor: 'pointer',
+        scrollSnapAlign: 'start',
+        transition: 'transform 120ms ease, border-color 120ms ease',
+        '&:hover': { transform: 'translateY(-1px)' },
+    },
+    thumbSelected: {
+        borderColor: 'primary.main',
+        boxShadow: 1,
+    },
+    thumb: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover' as const,
+        display: 'block',
     },
 };

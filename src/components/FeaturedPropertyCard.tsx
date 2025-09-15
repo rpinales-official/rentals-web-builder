@@ -68,7 +68,6 @@ const styles = {
         },
     },
     selected: {
-        // subtle highlight for the selected property
         '& img': {
             boxShadow: (theme: any) => `0 0 0 3px ${theme.palette.primary.light}`,
         },
@@ -76,14 +75,14 @@ const styles = {
     clickArea: {
         display: 'block',
         width: '100%',
-        borderRadius: 12,
+        borderRadius: 1,     // was 12 → subtle rounding (~16px)
         overflow: 'hidden',
     },
     img: {
         width: '100%',
         height: { xs: 200, sm: 280, md: 340 },
         objectFit: 'cover' as const,
-        borderRadius: 3,
+        borderRadius: 1,     // match the clickArea
         display: 'block',
         boxShadow: 1,
         transition: 'transform 180ms ease',

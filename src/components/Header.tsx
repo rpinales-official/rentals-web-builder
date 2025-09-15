@@ -7,9 +7,9 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 
 const navItems = [
-	{ label: 'Home', to: '/' },
-	{ label: 'Properties', to: '/#properties' }, // anchor for now
-	{ label: 'About Us', to: '/#about' },
+	// { label: 'Home', to: '/' },
+	// { label: 'Properties', to: '/#properties' }, // anchor for now
+	// { label: 'About Us', to: '/#about' },
 	{ label: 'Contact', to: '/#contact' },
 ];
 

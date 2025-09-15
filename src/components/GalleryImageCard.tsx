@@ -12,7 +12,13 @@ type Props = {
     sx?: SxProps<Theme>;
 };
 
-export default function GalleryImageCard({ image, label, imagesInCategory = [], onOpen, sx }: Props) {
+export default function GalleryImageCard({
+    image,
+    label,
+    imagesInCategory = [],
+    onOpen,
+    sx,
+}: Props) {
     const [open, setOpen] = React.useState(false);
 
     const handleOpen = () => {
@@ -25,7 +31,13 @@ export default function GalleryImageCard({ image, label, imagesInCategory = [], 
         <>
             <Paper elevation={0} onClick={handleOpen} sx={{ ...styles.card, ...sx }}>
                 <Box component="img" src={image.src} alt={image.alt || label} loading="lazy" sx={styles.img} />
-                <Typography variant="subtitle2" sx={styles.caption}>{label}</Typography>
+
+                {/* Floating label overlay (no border/shadow) */}
+                <Box sx={styles.badgeWrap}>
+                    <Typography variant="body2" sx={styles.badgeText}>
+                        {label}
+                    </Typography>
+                </Box>
             </Paper>
 
             <GalleryViewerModal
@@ -41,15 +53,27 @@ export default function GalleryImageCard({ image, label, imagesInCategory = [], 
 
 const styles = {
     card: {
+        position: 'relative' as const,
         cursor: 'pointer',
         width: '100%',
-        borderRadius: 3,
+        borderRadius: 1,
         overflow: 'hidden',
         bgcolor: 'background.paper',
         transition: 'transform 160ms ease, box-shadow 160ms ease',
-        boxShadow: 1,
-        '&:hover': { transform: 'translateY(-2px)', boxShadow: 3 },
+        boxShadow: 0,                    // no shadow for a cleaner tile
+        '&:hover': { transform: 'translateY(-2px)', boxShadow: 2 },
     },
     img: { width: '100%', height: 140, objectFit: 'cover', display: 'block' },
-    caption: { px: 1, py: 0.75, color: 'text.primary', fontWeight: 600 },
+
+    // Floating label
+    badgeWrap: {
+        position: 'absolute' as const,
+        left: 10,
+        bottom: 10,
+        px: 1,
+        py: 0.25,
+        borderRadius: 1,                 // tiny rounding on the chip
+        bgcolor: 'rgba(255,255,255,0.92)',   // “no border/shadow” look
+    },
+    badgeText: { fontWeight: 600, color: 'text.primary', lineHeight: 1.2 },
 };
