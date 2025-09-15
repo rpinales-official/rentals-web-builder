@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import FeaturedPropertiesCarousel from '../sections/FeaturedPropertiesCarousel';
 import AmenitiesSection from '../sections/AmenitiesSection';
-import GalleryImageCard from '../components/GalleryImageCard';
+import GallerySection from '../sections/GallerySection';   // ← NEW
 import { properties, type Property } from '../mock/mockData';
 
-// local helper
 function shuffleArray<T>(arr: T[]): T[] {
 	const copy = [...arr];
 	for (let i = copy.length - 1; i > 0; i--) {
@@ -16,20 +15,12 @@ function shuffleArray<T>(arr: T[]): T[] {
 }
 
 export default function Home() {
-	const randomize = true; // toggle if you want
-	// compute once on mount
 	const orderedItems = React.useMemo<Property[]>(
-		() => (randomize ? shuffleArray(properties) : properties),
-		[] // empty deps => only once
+		() => shuffleArray(properties),
+		[]
 	);
 
-	const [selectedId, setSelectedId] = React.useState<number>(
-		orderedItems[0]?.id ?? 1
-	);
-	const selected = React.useMemo(
-		() => orderedItems.find((p) => p.id === selectedId),
-		[orderedItems, selectedId]
-	);
+	const [selectedId, setSelectedId] = React.useState<number>(orderedItems[0]?.id ?? 1);
 
 	return (
 		<>
@@ -37,31 +28,16 @@ export default function Home() {
 
 			<FeaturedPropertiesCarousel
 				title="Featured Properties"
-				items={orderedItems}                 // <-- pass the order we're using
+				items={orderedItems}
 				selectedId={selectedId}
 				onSelect={(p) => setSelectedId(p.id)}
 			/>
 
+			<Section name="About" height={250} />
+
 			<AmenitiesSection title="Property Amenities" propertyId={selectedId} />
 
-			{selected && (
-				<Box sx={{ mb: 4 }}>
-					<Typography variant="h6" sx={{ mb: 1.5 }}>
-						Photo Gallery
-					</Typography>
-					<Grid container spacing={2}>
-						{selected.gallery.map((cat) => (
-							<Grid key={cat.key} item xs={6} sm={3}>
-								<GalleryImageCard
-									image={cat.cover}
-									label={cat.label}
-									imagesInCategory={cat.images}
-								/>
-							</Grid>
-						))}
-					</Grid>
-				</Box>
-			)}
+			<GallerySection propertyId={selectedId} />
 
 			<Section name="Reviews" height={250} />
 			<Section id="contact" name="Contact Form" height={200} />
