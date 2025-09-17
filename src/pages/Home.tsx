@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Box, Typography } from '@mui/material';
 import FeaturedPropertiesCarousel from '../sections/FeaturedPropertiesCarousel';
 import AmenitiesSection from '../sections/AmenitiesSection';
-import GallerySection from '../sections/GallerySection';   // ← NEW
+import GallerySection from '../sections/GallerySection';
+import AboutSection from '../sections/AboutSection';
 import { properties, type Property } from '../mock/mockData';
 
 function shuffleArray<T>(arr: T[]): T[] {
@@ -35,7 +36,7 @@ export default function Home() {
 
 			<AmenitiesSection title="Property Amenities" propertyId={selectedId} />
 
-			<Section name="About" height={250} />
+			<AboutSection propertyId={selectedId} />
 
 			<GallerySection propertyId={selectedId} />
 
