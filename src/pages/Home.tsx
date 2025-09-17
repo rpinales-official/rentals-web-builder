@@ -33,9 +33,9 @@ export default function Home() {
 				onSelect={(p) => setSelectedId(p.id)}
 			/>
 
-			<Section name="About" height={250} />
-
 			<AmenitiesSection title="Property Amenities" propertyId={selectedId} />
+
+			<Section name="About" height={250} />
 
 			<GallerySection propertyId={selectedId} />
 
