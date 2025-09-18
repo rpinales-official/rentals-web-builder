@@ -4,6 +4,8 @@ import FeaturedPropertiesCarousel from '../sections/FeaturedPropertiesCarousel';
 import AmenitiesSection from '../sections/AmenitiesSection';
 import GallerySection from '../sections/GallerySection';
 import AboutSection from '../sections/AboutSection';
+import ReviewsSection from '../sections/ReviewsSection';
+
 import { properties, type Property } from '../mock/mockData';
 
 function shuffleArray<T>(arr: T[]): T[] {
@@ -26,21 +28,17 @@ export default function Home() {
 	return (
 		<>
 			{/* <Section name="Logo" height={200} /> */}
-
 			<FeaturedPropertiesCarousel
 				title="Featured Properties"
 				items={orderedItems}
 				selectedId={selectedId}
 				onSelect={(p) => setSelectedId(p.id)}
 			/>
-
 			<AmenitiesSection title="Property Amenities" propertyId={selectedId} />
-
 			<AboutSection propertyId={selectedId} />
-
 			<GallerySection propertyId={selectedId} />
+			<ReviewsSection propertyId={selectedId} />
 
-			<Section name="Reviews" height={250} />
 			<Section id="contact" name="Contact Form" height={200} />
 		</>
 	);
