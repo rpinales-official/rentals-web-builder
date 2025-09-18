@@ -1,5 +1,3 @@
-// src/sections/ReviewsSection.tsx
-import * as React from 'react';
 import { Box, Typography } from '@mui/material';
 import ReviewCard from '../components/ReviewCard';
 import { properties } from '../mock/mockData';
@@ -26,11 +24,18 @@ export default function ReviewsSection({ propertyId, title = 'Guest Reviews' }: 
 }
 
 const styles = {
-    wrap: { mb: 4 },
-    title: { mb: 2 },
+    wrap: {
+        mb: 4
+    },
+    title: {
+        mb: 2
+    },
     grid: {
         display: 'grid',
-        gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, // 1 col on mobile, 2 on ≥600px
+        gridTemplateColumns: {
+            xs: '1fr',
+            sm: '1fr 1fr'
+        }, // 1 col on mobile, 2 on ≥600px
         columnGap: '24px',
         rowGap: '16px',
         alignItems: 'stretch', // rows share the tallest cell height
