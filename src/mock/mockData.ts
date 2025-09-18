@@ -178,27 +178,35 @@ export const properties: Property[] = [
         reviews: [
             {
                 id: 1,
-                name: "Clara Bennett",
-                date: "2023-07-15",
+                name: "Andre",
+                date: "2025-08-28",
                 rating: 5,
                 comment:
-                    "Absolutely stunning property! Beautifully decorated and well-equipped. We can’t wait to return.",
+                    "Great value. The indoor outdoor feel of the place is what I loved most. The location is amazing with lots of things in walking distance and most importantly I felt safe there. I would definitely book again. The host was also super helpful and very responsive.",
             },
             {
                 id: 2,
-                name: "Ethan Carter",
-                date: "2023-06-22",
-                rating: 4,
+                name: "Annabell",
+                date: "2025-01-22",
+                rating: 5,
                 comment:
-                    "Perfect location and very comfortable. A few minor updates would make it flawless.",
+                    "My husband and I stayed in the house with our 11 months old daughter. It was great, we had everything we needed. Communication with the host was good and the location is great. We could walk with our stroller through the old town. The accommodation had a babybed, but we ended up renting a babychair with babyquip.",
             },
             {
                 id: 3,
-                name: "Sophia Hayes",
-                date: "2023-05-10",
+                name: "Danielle",
+                date: "2025-03-10",
                 rating: 5,
                 comment:
-                    "Exceeded expectations. Host was responsive and helpful. Highly recommended!",
+                    "Beautiful and huge house, fully equipped. Also fresh due to the high ceilings. Easy checkin and checkout. My family loved to hang out in the patio having coffee. The hosts were super responsive and attentive. Recommended!",
+            },
+            {
+                id: 4,
+                name: "Jonathan",
+                date: "2024-09-10",
+                rating: 5,
+                comment:
+                    "Place was great, lots of open space and clean. Great location about 10-15 min walk from Zona Colonial. Hosts were super nice and attentive, messaging me at multiple points of my stay asking if I needed anything or any recommendations. Would definitely recommend!",
             },
         ],
         bookingUrl: "https://airbnb.com/h/oasisuruguay",
@@ -298,7 +306,38 @@ export const properties: Property[] = [
             },
         ],
         reviews: [
-            { id: 4, name: "Daniel Kim", date: "2023-04-02", rating: 5, comment: "The perfect hideaway!" },
+            {
+                id: 1,
+                name: "Bettina",
+                date: "2024-01-10",
+                rating: 5,
+                comment:
+                    "We had a wonderful time at Christina's place. The location is great, beach and pool just outside, secure and private. We would love to come again. The place provides a lot of space, big living room and table to enjoy with family and friends. Thank you!",
+            },
+            {
+                id: 2,
+                name: "Hector",
+                date: "2025-06-10",
+                rating: 5,
+                comment:
+                    "Beautiful place, close to everything, with hosts that are very attentive.",
+            },
+            {
+                id: 3,
+                name: "Sylvain",
+                date: "2025-03-10",
+                rating: 5,
+                comment:
+                    "Beautiful location, would recommend to others.",
+            },
+            {
+                id: 4,
+                name: "Carlos",
+                date: "2025-05-10",
+                rating: 5,
+                comment:
+                    "A divine apartment located in front of the best beach. The hosts are a luxury. Thank you very much",
+            },
         ],
         bookingUrl: "https://airbnb.com/h/palmeraie901",
     },
