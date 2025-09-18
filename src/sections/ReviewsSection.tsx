@@ -1,11 +1,10 @@
+// src/sections/ReviewsSection.tsx
+import * as React from 'react';
 import { Box, Typography } from '@mui/material';
 import ReviewCard from '../components/ReviewCard';
 import { properties } from '../mock/mockData';
 
-type Props = {
-    propertyId: number;
-    title?: string;
-};
+type Props = { propertyId: number; title?: string };
 
 export default function ReviewsSection({ propertyId, title = 'Guest Reviews' }: Props) {
     const property = properties.find((p) => p.id === propertyId);
@@ -15,11 +14,10 @@ export default function ReviewsSection({ propertyId, title = 'Guest Reviews' }: 
         <Box sx={styles.wrap}>
             <Typography variant="h6" sx={styles.title}>{title}</Typography>
 
-            {/* Masonry-style columns */}
-            <Box sx={styles.masonry}>
-                {property.reviews.map((review) => (
-                    <Box key={review.id} sx={styles.masonryItem}>
-                        <ReviewCard review={review} />
+            <Box sx={styles.grid}>
+                {property.reviews.map((r) => (
+                    <Box key={r.id} sx={styles.cell}>
+                        <ReviewCard review={r} />
                     </Box>
                 ))}
             </Box>
@@ -30,16 +28,14 @@ export default function ReviewsSection({ propertyId, title = 'Guest Reviews' }: 
 const styles = {
     wrap: { mb: 4 },
     title: { mb: 2 },
-    masonry: {
-        columnCount: { xs: 1, sm: 2 },
+    grid: {
+        display: 'grid',
+        gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, // 1 col on mobile, 2 on ≥600px
         columnGap: '24px',
+        rowGap: '16px',
+        alignItems: 'stretch', // rows share the tallest cell height
     },
-    masonryItem: {
-        breakInside: 'avoid',
-        WebkitColumnBreakInside: 'avoid',
-        pageBreakInside: 'avoid',
-        display: 'inline-block',
-        width: '100%',
-        marginBottom: '24px',
+    cell: {
+        display: 'flex', // lets the inner card stretch to full cell height
     },
 };
